@@ -175,17 +175,18 @@ class AksharaCatcherScene extends BaseScene {
     basketGraphics.closePath();
     basketGraphics.fillPath();
 
-    // Add handle
+    // Add handles (simple arcs)
     basketGraphics.lineStyle(3, 0x654321, 1);
-    basketGraphics.beginPath();
-    basketGraphics.moveTo(-basketWidth / 2 + 10, 0);
-    basketGraphics.quadraticCurveTo(-basketWidth / 2 - 10, -20, -basketWidth / 2 + 10, -40);
-    basketGraphics.stroke();
 
+    // Left handle
     basketGraphics.beginPath();
-    basketGraphics.moveTo(basketWidth / 2 - 10, 0);
-    basketGraphics.quadraticCurveTo(basketWidth / 2 + 10, -20, basketWidth / 2 - 10, -40);
-    basketGraphics.stroke();
+    basketGraphics.arc(-basketWidth / 2 + 5, -10, 15, Math.PI, 0, false);
+    basketGraphics.strokePath();
+
+    // Right handle
+    basketGraphics.beginPath();
+    basketGraphics.arc(basketWidth / 2 - 5, -10, 15, Math.PI, 0, false);
+    basketGraphics.strokePath();
 
     this.basket.add(basketGraphics);
 
