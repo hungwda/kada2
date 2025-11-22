@@ -12,9 +12,11 @@ import Home from './routes/Home';
 import Onboarding from './routes/Onboarding';
 import Dashboard from './routes/Dashboard';
 import GameHub from './routes/GameHub';
-import GameView from './routes/GameView';
 import Profile from './routes/Profile';
 import Settings from './routes/Settings';
+
+// Pages
+import GameView from './pages/GameView';
 
 // Components
 import AppShell from './components/AppShell';
@@ -30,34 +32,23 @@ const App = () => {
 
   useEffect(() => {
     // Check if user has completed onboarding
-    const store = window.store;
-    const state = store.getState();
+    if (window.store) {
+      const store = window.store;
+      const state = store.getState();
 
-    const hasProfile = state.user.profile.name && state.user.profile.name.length > 0;
-    setIsOnboarded(hasProfile);
-
-    // Listen for state changes
-    const unsubscribe = store.subscribe((newState) => {
-      const hasProfile = newState.user.profile.name && newState.user.profile.name.length > 0;
+      const hasProfile = state.user.profile.name && state.user.profile.name.length > 0;
       setIsOnboarded(hasProfile);
-    });
 
-    // Set up PWA listeners
-    const pwa = window.services.get('pwa');
+      // Listen for state changes
+      const unsubscribe = store.subscribe((newState) => {
+        const hasProfile = newState.user.profile.name && newState.user.profile.name.length > 0;
+        setIsOnboarded(hasProfile);
+      });
 
-    pwa.on('app-installed', () => setIsInstalled(true));
-    pwa.on('update-available', () => setUpdateAvailable(true));
-    pwa.on('online', () => setIsOnline(true));
-    pwa.on('offline', () => setIsOnline(false));
-
-    // Get initial PWA state
-    setIsInstalled(pwa.getInstallStatus());
-    setUpdateAvailable(pwa.hasUpdate());
-    setIsOnline(pwa.getOnlineStatus());
-
-    return () => {
-      unsubscribe();
-    };
+      return () => {
+        unsubscribe();
+      };
+    }
   }, []);
 
   // Handle onboarding completion
@@ -81,10 +72,10 @@ const App = () => {
         <Settings path="/settings" />
       </Router>
 
-      {/* PWA Components */}
-      {!isInstalled && <InstallPrompt />}
-      {updateAvailable && <UpdateNotification />}
-      {!isOnline && <OfflineIndicator />}
+      {/* PWA Components - Coming soon */}
+      {/* {!isInstalled && <InstallPrompt />} */}
+      {/* {updateAvailable && <UpdateNotification />} */}
+      {/* {!isOnline && <OfflineIndicator />} */}
     </AppShell>
   );
 };
