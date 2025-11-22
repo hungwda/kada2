@@ -7,7 +7,7 @@ import { h, render } from 'preact';
 import App from './app/App';
 
 import GameManager from './core/GameManager';
-import { StateStore, createInitialState, rootReducer } from './core/StateStore';
+import StateStore, { createInitialState, rootReducer } from './core/StateStore';
 import ServiceRegistry from './core/ServiceRegistry';
 
 import ViewportManager from './services/ViewportManager';
