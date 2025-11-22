@@ -15,10 +15,12 @@ import GameContainer from '../components/GameContainer';
 
 // Import game configurations
 import letterMatchConfig from '../../games/LetterMatch/config';
+import aksharaCatcherConfig from '../../games/AksharaCatcher/config';
 
 // Game registry
 const GAME_CONFIGS = {
   'letter-match': letterMatchConfig,
+  'akshara-catcher': aksharaCatcherConfig,
   // Add more games here as they're created
 };
 
