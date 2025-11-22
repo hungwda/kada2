@@ -27,6 +27,19 @@ This project provides a comprehensive suite of educational games covering:
 
 ### Modern, Scalable Design
 
+✅ **Preact Application Shell**
+- Lightweight UI framework (3KB gzipped)
+- User profiles and onboarding
+- PWA management and installation
+- Responsive component-based UI
+- Client-side routing
+
+✅ **Phaser Game Engine**
+- 25+ interactive learning games
+- High-performance 2D rendering
+- Mobile and touch optimized
+- Integrated with Preact shell
+
 ✅ **Redux-like State Management**
 - Single source of truth
 - Time-travel debugging
@@ -41,10 +54,7 @@ This project provides a comprehensive suite of educational games covering:
 - ViewportManager with intelligent breakpoints
 - Design tokens for consistency
 - Orientation-aware layouts
-
-✅ **Component-Based UI**
-- Reusable, responsive components
-- Consistent design across 25+ games
+- 6 breakpoints (mobile → desktop wide)
 
 ✅ **Configuration-Driven**
 - JSON-based game definitions
@@ -56,21 +66,35 @@ This project provides a comprehensive suite of educational games covering:
 ```
 kannada-learning-games/
 ├── src/
+│   ├── app/                # Preact application shell
+│   │   ├── App.jsx         # Root component
+│   │   ├── routes/         # Route components (Home, Dashboard, etc.)
+│   │   ├── components/     # Preact UI components
+│   │   ├── hooks/          # Custom hooks (useProfile, usePWA, etc.)
+│   │   └── styles/         # Component styles
+│   │
 │   ├── core/               # Core framework (StateStore, GameManager, etc.)
-│   ├── services/           # Application services (Viewport, Audio, Progress)
+│   ├── services/           # Application services (Viewport, Audio, PWA, etc.)
 │   ├── middleware/         # State middleware (logging, persistence, analytics)
-│   ├── games/              # Individual game implementations
-│   ├── components/         # Reusable UI components
-│   ├── scenes/             # Phaser scenes
+│   │
+│   ├── phaser/             # Phaser game engine
+│   │   ├── games/          # Individual game implementations
+│   │   ├── scenes/         # Phaser scenes
+│   │   ├── components/     # Phaser game objects
+│   │   └── plugins/        # Phaser plugins
+│   │
 │   ├── data/               # Language data (letters, words, sentences)
 │   └── config/             # Configuration files
 │
 ├── public/
-│   └── assets/             # Images, audio, fonts
+│   ├── assets/             # Images, audio, fonts
+│   ├── manifest.json       # PWA manifest
+│   └── sw.js               # Service worker
 │
-├── GAME_IDEAS.md           # Complete list of 33 game concepts
-├── ARCHITECTURE.md         # Detailed architecture documentation
-└── ARCHITECTURE_COMPARISON.md # Analysis of architecture patterns
+├── GAME_IDEAS.md                    # Complete list of 33 game concepts
+├── ARCHITECTURE.md                  # Detailed architecture documentation
+├── ARCHITECTURE_COMPARISON.md       # Analysis of architecture patterns
+└── PREACT_SHELL_ARCHITECTURE.md    # Preact shell integration guide
 ```
 
 ## 🎮 Game Categories
@@ -117,25 +141,57 @@ npm run build
 
 ## 🔧 Technology Stack
 
-- **Phaser 3.70+**: Game framework
-- **Webpack 5**: Module bundling
-- **Babel**: ES6+ support
-- **Service Workers**: Offline support
+### Frontend
+- **Preact 10.19+**: UI framework (3KB)
+- **Preact Router**: Client-side routing
+- **Phaser 3.70+**: Game engine
+
+### Build & Tools
+- **Webpack 5**: Module bundling and code splitting
+- **Babel**: ES6+ and JSX support
+- **Workbox**: Service worker generation
+
+### PWA & Storage
+- **Service Workers**: Offline support and caching
 - **LocalStorage**: Progress persistence
+- **IndexedDB**: Asset caching (optional)
+
+### Architecture
+- **Redux Pattern**: State management
+- **Dependency Injection**: Service registry
+- **Middleware**: Cross-cutting concerns
 
 ## 📖 Documentation
 
 - **[GAME_IDEAS.md](./GAME_IDEAS.md)**: All 33 game concepts with descriptions
+  - Learning objectives and categories
+  - Implementation phases
+  - Asset requirements
+
 - **[ARCHITECTURE.md](./ARCHITECTURE.md)**: Complete architecture guide
   - Core systems (StateStore, ServiceRegistry, ViewportManager)
   - Service architecture
   - Responsive design system
   - Component library
   - Implementation examples
+
+- **[PREACT_SHELL_ARCHITECTURE.md](./PREACT_SHELL_ARCHITECTURE.md)**: Preact shell integration
+  - Application shell design
+  - User profile management
+  - Onboarding flows
+  - PWA implementation
+  - Custom hooks
+  - Phaser integration
+
 - **[ARCHITECTURE_COMPARISON.md](./ARCHITECTURE_COMPARISON.md)**: Architecture analysis
   - Pattern recommendations
   - Integration strategy
   - Best practices
+
+- **[INTEGRATION_SUMMARY.md](./INTEGRATION_SUMMARY.md)**: Implementation summary
+  - Architecture decisions
+  - Integration strategy
+  - Implementation phases
 
 ## 🎨 Design Principles
 
