@@ -38,6 +38,16 @@ Reviewed the comprehensive architecture recommendations and identified **highly 
 - Design tokens
 - Complete folder structure
 
+**PREACT_SHELL_ARCHITECTURE.md** ✨ NEW
+- Preact application shell design
+- User profile management
+- Multi-step onboarding flows
+- PWA implementation (install, updates, offline)
+- Custom hooks (usePWA, useProfile, useProgress)
+- Phaser game integration
+- Component library structure
+- Routing strategy
+
 **ARCHITECTURE_COMPARISON.md**
 - Detailed analysis of recommended vs. current patterns
 - Highly applicable recommendations (⭐⭐⭐)
@@ -48,11 +58,11 @@ Reviewed the comprehensive architecture recommendations and identified **highly 
 
 **README.md**
 - Project overview
-- Architecture highlights
+- Architecture highlights (including Preact)
 - Quick start guide
 - Development workflow
 - Game categories
-- Technology stack
+- Technology stack (Preact + Phaser)
 - Roadmap
 
 ## Key Architectural Decisions
@@ -192,44 +202,100 @@ data/kannada/
   audio-map.json
 ```
 
+### 7. Preact Application Shell
+**Why**:
+- Separate app UI from game UI
+- Lightweight (3KB vs 45KB React)
+- Better UX with onboarding
+- PWA management built-in
+- Profile and progress dashboard
+
+**Implementation**:
+```jsx
+// Preact shell wraps Phaser games
+<App>
+  <AppShell>
+    <Router>
+      <Home />
+      <Dashboard />
+      <GameView>
+        <PhaserGame />  ← Phaser games inside Preact
+      </GameView>
+    </Router>
+  </AppShell>
+</App>
+```
+
+**Services Added**:
+- PWAService for install prompts and updates
+- Enhanced routing with preact-router
+- Custom hooks for PWA, profile, progress
+
 ## Final Architecture
 
 ### Folder Structure
 
 ```
 src/
+├── app/                        # ✨ Preact application shell (NEW)
+│   ├── App.jsx                 # Root component
+│   ├── AppShell.jsx            # Main layout
+│   ├── routes/                 # Route components
+│   │   ├── Home.jsx
+│   │   ├── Onboarding.jsx
+│   │   ├── Dashboard.jsx
+│   │   ├── GameHub.jsx
+│   │   ├── GameView.jsx        # Phaser container
+│   │   ├── Profile.jsx
+│   │   └── Settings.jsx
+│   ├── components/             # Preact UI components
+│   │   ├── common/
+│   │   ├── profile/
+│   │   ├── onboarding/
+│   │   ├── pwa/
+│   │   └── dashboard/
+│   ├── hooks/                  # Custom hooks
+│   │   ├── usePWA.js
+│   │   ├── useProfile.js
+│   │   └── useProgress.js
+│   └── styles/                 # Component styles
+│
 ├── core/                       # Modern architecture core
-│   ├── GameManager.js          # Application coordinator (singleton)
-│   ├── StateStore.js           # Redux-like state management ✨
+│   ├── GameManager.js          # Application coordinator
+│   ├── StateStore.js           # Redux-like state ✨
 │   ├── ServiceRegistry.js      # Dependency injection ✨
 │   ├── BaseService.js          # Service base class ✨
 │   ├── BaseGame.js             # Game base class
 │   └── BaseScene.js            # Scene base class
 │
 ├── services/                   # Service layer ✨
-│   ├── ViewportManager.js      # Enhanced responsive system ✨
+│   ├── ViewportManager.js      # Enhanced responsive ✨
 │   ├── AudioManager.js         # Audio management
 │   ├── ProgressManager.js      # Progress tracking
 │   ├── AnalyticsService.js     # Learning analytics ✨
-│   └── I18nService.js          # Internationalization ✨
+│   ├── I18nService.js          # Internationalization ✨
+│   └── PWAService.js           # PWA management ✨ (NEW)
 │
 ├── middleware/                 # State middleware ✨
 │   ├── loggerMiddleware.js
 │   ├── persistenceMiddleware.js
 │   └── analyticsMiddleware.js
 │
-├── games/                      # Game-specific (retained)
-│   ├── AksharaCatcher/
-│   ├── BalloonPop/
-│   └── [33 total games]
+├── phaser/                     # Phaser game engine (organized)
+│   ├── games/                  # Game implementations
+│   │   ├── AksharaCatcher/
+│   │   ├── BalloonPop/
+│   │   └── [33 total games]
+│   ├── scenes/                 # Phaser scenes
+│   ├── components/             # Phaser game objects
+│   └── plugins/                # Phaser plugins
 │
-├── components/                 # UI components (retained)
-├── scenes/                     # Phaser scenes (retained)
-├── data/                       # Language data (retained)
-└── config/                     # Configuration (enhanced)
+├── data/                       # Language data
+└── config/                     # Configuration
 ```
 
-✨ = New or significantly enhanced from recommendations
+✨ = Enhanced from recommendations
+(NEW) = Added with Preact shell
 
 ## State Structure
 
