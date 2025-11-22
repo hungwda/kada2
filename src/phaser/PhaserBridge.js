@@ -145,15 +145,21 @@ class PhaserBridge {
 
     console.log(`Starting scene: ${sceneKey}`);
 
-    // Get scene
-    const scene = this.game.scene.getScene(sceneKey);
+    // Wait for Phaser to finish registering scenes, then start
+    const tryStartScene = () => {
+      const scene = this.game.scene.getScene(sceneKey);
 
-    if (scene) {
-      this.game.scene.start(sceneKey, data);
-      this.emit('scene-start', { sceneKey, data });
-    } else {
-      console.error(`Scene not found: ${sceneKey}`);
-    }
+      if (scene) {
+        this.game.scene.start(sceneKey, data);
+        this.emit('scene-start', { sceneKey, data });
+        console.log(`Scene ${sceneKey} started successfully`);
+      } else {
+        // Scene not ready yet, try again on next frame
+        setTimeout(tryStartScene, 10);
+      }
+    };
+
+    tryStartScene();
   }
 
   /**
